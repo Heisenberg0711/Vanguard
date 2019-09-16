@@ -18,6 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainFragment extends Fragment implements OnMapReadyCallback {
     private MapView mapView;
     private View view;
+    private GoogleMap googleMap;
 
     public static MainFragment newInstance() {
 
@@ -88,6 +90,9 @@ public class MainFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         MapsInitializer.initialize(getContext());
+
+        this.googleMap = googleMap;
+        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(),R.raw.style_json));
         double latitude = 17.385044;
         double longitude = 78.486671;
 
