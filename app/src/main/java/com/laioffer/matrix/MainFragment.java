@@ -29,6 +29,8 @@ public class MainFragment extends Fragment implements OnMapReadyCallback {
     private MapView mapView;
     private View view;
     private GoogleMap googleMap;
+    private LocationTracker locationTracker;
+
 
     public static MainFragment newInstance() {
 
@@ -93,8 +95,11 @@ public class MainFragment extends Fragment implements OnMapReadyCallback {
 
         this.googleMap = googleMap;
         googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(),R.raw.style_json));
-        double latitude = 17.385044;
-        double longitude = 78.486671;
+        locationTracker = new LocationTracker(getActivity());
+        locationTracker.getLocation();
+
+        double latitude = locationTracker.getLatitude();
+        double longitude = locationTracker.getLongitude();
 
         // Create marker on google map
         MarkerOptions marker = new MarkerOptions().position(
@@ -110,7 +115,7 @@ public class MainFragment extends Fragment implements OnMapReadyCallback {
 
         // Set up camera configuration, set camera to latitude = 17.385044, longitude = 78.486671, and set Zoom to 12
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(latitude, longitude)).zoom(12).build();
+                .target(new LatLng(latitude, longitude)).zoom(16).bearing(90).tilt(30).build();
 
         // Animate the zoom process
         googleMap.animateCamera(CameraUpdateFactory
